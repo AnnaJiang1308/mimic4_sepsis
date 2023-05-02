@@ -21,6 +21,7 @@ with open('itemid_label.csv', newline='') as csvfile:
 
 # Connect to the database, use your own username, password and database name
 conn = psycopg2.connect(host='localhost', user='postgres', password='123', database='mimiciv')
+# conn = psycopg2.connect(host='', user='', password='', database='mimiciv')
 
 
 # create table
