@@ -1,11 +1,13 @@
 import pandas as pd
 # Load the CSV file into a pandas DataFrame
-df = pd.read_csv('./output_state/ABE.csv',names=['stay_id', 'chartdatetime', 'value', 'valuenum'])
+
+#:FIXME: BUN.csv(30588857)
+df = pd.read_csv('./output_state/BUN.csv',names=['stay_id', 'chartdatetime', 'value', 'valuenum'])
 
 selected_id = 30588857
 df_filtered = df[df['stay_id'] == selected_id]
 
-# Convert the 'datetime' column to a datetime object
+# Convert the 'datetime' column to a datetime object    
 df_filtered['chartdatetime'] = pd.to_datetime(df_filtered['chartdatetime'])
 
 
@@ -17,7 +19,11 @@ df_filtered.set_index('chartdatetime', inplace=True)
 print(df_filtered)
 
 # # Resample the DataFrame hourly and forward fill missing values
-df_hourly= df_filtered.resample('H').ffill()
+df_hourly= df_filtered.resample('H').ffill().interpolate(method='linear')
+
+#df_hourly= df_filtered.resample('H')
+#df_hourly= df_filtered.resample('H').ffill().interpolate(method='linear')
+
 
 print(df_hourly)
 
