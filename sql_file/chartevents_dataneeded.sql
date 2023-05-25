@@ -54,6 +54,6 @@ insert into  mimiciv_derived.Charteventsneeded
 
 create table  mimiciv_derived.sepsis_state as
 	select * from mimiciv_derived.charteventsneeded
-	where stay_id in (select stay_id from mimiciv_derived.sepsis3);
+	where stay_id in (select stay_id from mimiciv_derived.sepsis_patients_cohort);
 	
 	

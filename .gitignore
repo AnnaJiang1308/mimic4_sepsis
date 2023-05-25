@@ -1,2 +1,6 @@
 output
 pyws
+.dbeaver
+.project
+
+sql_file/test.sql

@@ -10,6 +10,6 @@ create table mimiciv_derived.Inputeventsneeded as
 
 create table mimiciv_derived.sepsis_action as
 	select * from mimiciv_derived.Inputeventsneeded
-	where stay_id in (select stay_id from mimiciv_derived.sepsis3);
+	where stay_id in (select stay_id from mimiciv_derived.sepsis_patients_cohort);
 	
 	
