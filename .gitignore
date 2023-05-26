@@ -1,2 +1,8 @@
 output
 pyws
+.dbeaver
+.project
+.vscode
+.DS_Store
+
+sql_file/test.sql
