@@ -6,7 +6,7 @@ drop table IF EXISTS sepsis_action;
 create table mimiciv_derived.Inputeventsneeded as
 	select stay_id, itemid, starttime, endtime, amount
 	from mimiciv_icu.inputevents
-	where itemid= 220964 or itemid= 221906 or itemid= 222315 or itemid= 221653 or itemid= 221986 or itemid= 221749;
+	where itemid= 220964 or itemid= 221906 or itemid= 222315 or itemid= 221653 or itemid= 221986 or itemid= 221749 or itemid=221662;
 
 create table mimiciv_derived.sepsis_action as
 	select * from mimiciv_derived.Inputeventsneeded
