@@ -40,37 +40,39 @@
 
 -- 获取所有 Dextrose
 -- select count(*) from mimiciv_icu.inputevents where itemid in (select itemid from mimiciv_icu.d_items where label like '%Dextrose%');
-SELECT 
-    i.itemid, 
-    d.label, 
-    count(*) as count
-FROM 
-    mimiciv_icu.inputevents as i
-INNER JOIN 
-    mimiciv_icu.d_items as d 
-ON 
-    i.itemid = d.itemid
-WHERE 
-    d.label LIKE '%Dextrose%'
-GROUP BY 
-    i.itemid, 
-    d.label;
+-- SELECT 
+--     i.itemid, 
+--     d.label, 
+--     count(*) as count
+-- FROM 
+--     mimiciv_icu.inputevents as i
+-- INNER JOIN 
+--     mimiciv_icu.d_items as d 
+-- ON 
+--     i.itemid = d.itemid
+-- WHERE 
+--     d.label LIKE '%Dextrose%'
+-- GROUP BY 
+--     i.itemid, 
+--     d.label;
 
 
 -- 获取所有 NaCl
 -- select count(*) from mimiciv_icu.inputevents where itemid in (select itemid from mimiciv_icu.d_items where label like '%Dextrose%');
-SELECT 
-    i.itemid, 
-    d.label, 
-    count(*) as count
-FROM 
-    mimiciv_icu.inputevents as i
-INNER JOIN 
-    mimiciv_icu.d_items as d 
-ON 
-    i.itemid = d.itemid
-WHERE 
-    d.label LIKE '%NaCl%'
-GROUP BY 
-    i.itemid, 
-    d.label;
+-- SELECT 
+--     i.itemid, 
+--     d.label, 
+--     count(*) as count
+-- FROM 
+--     mimiciv_icu.inputevents as i
+-- INNER JOIN 
+--     mimiciv_icu.d_items as d 
+-- ON 
+--     i.itemid = d.itemid
+-- WHERE 
+--     d.label LIKE '%NaCl%'
+-- GROUP BY 
+--     i.itemid, 
+--     d.label;
+
+-- select * from mimiciv_icu.inputevents where stay_id=30000484;
