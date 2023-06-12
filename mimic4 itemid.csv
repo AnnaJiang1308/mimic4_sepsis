@@ -64,9 +64,14 @@ Glasgow Coma Scale (GCS),220739,chartevents,GCS - Eye Opening
 ,223901,chartevents,GCS - Motor Response
 ,,,
 action space,,,
-IV fluid bolus,220964,inputevents,"""Dextrose 5% / Saline 0,9% removed”"
+IV fluid bolus,220964,inputevents,"""Dextrose 5% / Saline 0,9% no data removed"""
+Saline_0_9%,220954,inputevents, """Saline 0,9% no data removed"""
+NaCl_0_9%,225158,inputevents, """NaCl_0_9%, 1258660 rows"""
+Dextrose_5%,220949,inputevents, """Dextrose_5%, 1034251 rows"""
 Norepinephrine,221906,inputevents,
 Vasopressin,222315,inputevents,
 Dobutamine,221653,inputevents,
 Milrinone,221986,inputevents,
 Phenylephrine,221749,inputevents,
+Dopamine,221662,inputevents,
+Epinephrine,221289,inputevents,
