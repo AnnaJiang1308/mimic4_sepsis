@@ -47,10 +47,10 @@ def hourly_sample_state(selected_id, itemid_list_state, label_state, k = 5):
         df['stay_id'] = pd.to_numeric(df['stay_id'], errors='coerce')
         
         # Filter the DataFrame to only the rows from the selected stay_id
-        df_filtered = df[df['stay_id'] == selected_id]
+        df_filtered = df[df['stay_id'] == selected_id].copy()
         
         # Convert the 'datetime' column to a datetime object
-        df_filtered.loc[:,'chartdatetime'] = pd.to_datetime(df_filtered['chartdatetime'].copy())
+        df_filtered.loc[:,'chartdatetime'] = pd.to_datetime(df_filtered['chartdatetime'])
         #df_filtered['chartdatetime'] = df_filtered['chartdatetime'].apply(pd.to_datetime)
 
         # Set the 'datetime' column as the DataFrame's index
