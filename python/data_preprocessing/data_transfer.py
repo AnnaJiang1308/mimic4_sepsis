@@ -99,24 +99,24 @@ def data_transfer_action_IV_fluid_bolus(conn):
         cursor.close()
 
 def data_transfer_action_vasopressors_equivalent_dose(conn):
-    # Get the equivalent dose values of the top 5 vasopressors from mimiciv_derived.norepinephrine_equivalent_dose: norepinephrine_equivalent_dose_rate
+    # Get the equivalent dose values of the 5 vasopressors from mimiciv_derived.norepinephrine_equivalent_dose: norepinephrine_equivalent_dose
 
     if os.path.exists('./output/data/data_raw/action/vasopressors'):shutil.rmtree('./output/data/data_raw/action/vasopressors')
     os.makedirs('./output/data/data_raw/action/vasopressors')
 
     with conn.cursor() as cursor:
-        # SQL command to retrieve norepinephrine_equivalent_dose_rate from mimiciv_derived.norepinephrine_equivalent_dose for stay_ids in mimiciv_derived.sepsis_patients_cohort
+        # SQL command to retrieve norepinephrine_equivalent_dose from mimiciv_derived.norepinephrine_equivalent_dose for stay_ids in mimiciv_derived.sepsis_patients_cohort
         command = "select stay_id, starttime, endtime, norepinephrine_equivalent_dose from mimiciv_derived.norepinephrine_equivalent_dose where stay_id in (select stay_id from mimiciv_derived.sepsis_patients_cohort);"
         cursor.execute(command)
 
         result = cursor.fetchall()
         df = pd.DataFrame(result)
-        df.columns = ['stay_id', 'starttime', 'endtime', 'norepinephrine_equivalent_dose_rate']  # norepinephrine_equivalent_dose in mcg/kg/min
+        df.columns = ['stay_id', 'starttime', 'endtime', 'norepinephrine_equivalent_dose']  # norepinephrine_equivalent_dose in mcg/kg/min
         
         df['duration'] = df['endtime'] - df['starttime']
         df['duration'] = df['duration'].dt.total_seconds()  # Convert duration to seconds
         df['duration'] = df['duration'] / 60
-        df['norepinephrine_equivalent_dose_rate'] = df['norepinephrine_equivalent_dose_rate'].astype(float)
+        df['norepinephrine_equivalent_dose'] = df['norepinephrine_equivalent_dose'].astype(float)
         
         df.to_csv('./output/data/data_raw/action/vasopressors/vasopressors_equivalent_dose.csv', index=0)
         print("output action (vasopressors): vasopressors_equivalent_dose.csv")

@@ -142,7 +142,7 @@ def hourly_sample_action_IV_fluid_bolus(selected_id): # (mL/1 hour)
     # If the amount is missing, replace it with 0
     df_resampled_all.fillna(0, inplace=True)
 
-    # Discretize norepinephrine_equivalent_dose_rate
+    # Discretize norepinephrine_equivalent_dose
     bins = [-np.inf, 0, 12.5, 45, 132.5, np.inf]
     labels = [1, 2, 3, 4, 5]
     df_resampled_all['Discretized_IV_fluid_bolus'] = pd.cut(df_resampled_all['IV_fluid_bolus_per_hour'], bins=bins, labels=labels)
@@ -171,7 +171,7 @@ def hourly_sample_action_vasopressors_equivalent_dose(selected_id): # (mcg/kg/mi
             df_minutes.append({'stay_id': row['stay_id'], 
                                'starttime': time, 
                                'endtime': time + timedelta(minutes=1), 
-                               'norepinephrine_equivalent_dose_rate': row['norepinephrine_equivalent_dose_rate'], 
+                               'norepinephrine_equivalent_dose': row['norepinephrine_equivalent_dose'], 
                                'duration': 1})
 
     # Convert the list to a DataFrame
@@ -181,18 +181,18 @@ def hourly_sample_action_vasopressors_equivalent_dose(selected_id): # (mcg/kg/mi
     df_minutes.set_index('starttime', inplace=True)
 
     # Resample and get the max value for each hour
-    df_resampled = df_minutes['norepinephrine_equivalent_dose_rate'].resample('H').max()
+    df_resampled = df_minutes['norepinephrine_equivalent_dose'].resample('H').max()
 
-    # If the norepinephrine_equivalent_dose_rate is NaN, replace it with 0
+    # If the norepinephrine_equivalent_dose is NaN, replace it with 0
     df_resampled.fillna(0, inplace=True)
 
     # Reset the index
     df_resampled = df_resampled.reset_index()
 
-    # Discretize norepinephrine_equivalent_dose_rate
+    # Discretize norepinephrine_equivalent_dose
     bins = [-np.inf, 0, 0.08, 0.22, 0.45, np.inf]
     labels = [1, 2, 3, 4, 5]
-    df_resampled['Discretized_vasopressors'] = pd.cut(df_resampled['norepinephrine_equivalent_dose_rate'], bins=bins, labels=labels)
+    df_resampled['Discretized_vasopressors'] = pd.cut(df_resampled['norepinephrine_equivalent_dose'], bins=bins, labels=labels)
 
     # Write the discretized DataFrame to a CSV file
     os.makedirs('./output/data/data_hourly_sample/action/vasopressors_equivalent_dose', exist_ok=True)
