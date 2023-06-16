@@ -53,7 +53,8 @@ def data_transfer_state(conn, num_stay_ids, threshold = 1000):
                 print("output:{0:40}".format(label_state[str(itemid)]+".csv")+"\tnumber of stay_id:"+str(num))
 
         cursor.close()
-    print(itemid_list_state)
+    # print(itemid_list_state)
+    return itemid_list_state, label_state
 
 
 def data_transfer_action_IV_fluid_bolus(conn):
