@@ -9,7 +9,7 @@ def data_transfer_state(conn, num_stay_ids, threshold = 1000):
     # generate the list of itemid
     itemid_list_state=[]
     # generate the dictionary of itemid-abbr
-    with open('csv/itemid_label_state.csv', newline='') as csvfile:
+    with open('itemid_info/itemid_label_state.csv', newline='') as csvfile:
         # Create a CSV reader object
         reader = csv.reader(csvfile)
         # Skip the header row
@@ -59,7 +59,7 @@ def data_transfer_state(conn, num_stay_ids, threshold = 1000):
 
 def data_transfer_action_IV_fluid_bolus(conn):
         # generate the dictionary of action
-    with open('csv/itemid_label_action.csv', newline='') as csvfile:
+    with open('itemid_info/itemid_label_action.csv', newline='') as csvfile:
         # Create a CSV reader object
         reader = csv.reader(csvfile)
         # Skip the header row
