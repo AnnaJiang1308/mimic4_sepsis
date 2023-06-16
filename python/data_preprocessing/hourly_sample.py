@@ -195,5 +195,5 @@ def hourly_sample_action_vasopressors_equivalent_dose(selected_id): # (mcg/kg/mi
     df_resampled['Discretized_vasopressors'] = pd.cut(df_resampled['norepinephrine_equivalent_dose_rate'], bins=bins, labels=labels)
 
     # Write the discretized DataFrame to a CSV file
-    os.makedirs('./output/data/data_hourly_sample/action/discrete_resampled_vasopressors_norepinephrine_equivalent_dose', exist_ok=True)
-    df_resampled.to_csv(f'./output/data/data_hourly_sample/action/discrete_resampled_vasopressors_norepinephrine_equivalent_dose/{selected_id}.csv', index=False)
+    os.makedirs('./output/data/data_hourly_sample/action/vasopressors_norepinephrine_equivalent_dose', exist_ok=True)
+    df_resampled.to_csv(f'./output/data/data_hourly_sample/action/vasopressors_norepinephrine_equivalent_dose/{selected_id}.csv', index=False)
