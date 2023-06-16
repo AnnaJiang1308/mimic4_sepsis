@@ -13,8 +13,8 @@
 -- select * from mimiciv_icu.d_items where itemid=220964; -- Dextrose 5% / Saline 0,9%
 -- SELECT count(*) FROM mimiciv_icu.inputevents WHERE itemid=220964; -- Dextrose 5% / Saline 0,9%: 0 rows
 
-select * from mimiciv_icu.d_items where itemid=220954; -- Saline 0,9%
-SELECT count(*) FROM mimiciv_icu.inputevents WHERE itemid=220954; -- Saline 0,9%: 0 rows
+-- select * from mimiciv_icu.d_items where itemid=220954; -- Saline 0,9%
+-- SELECT count(*) FROM mimiciv_icu.inputevents WHERE itemid=220954; -- Saline 0,9%: 0 rows
 
 -- select * from mimiciv_icu.d_items where itemid=220949; -- Dextrose 5%
 -- SELECT count(*) FROM mimiciv_icu.inputevents WHERE itemid=220949; -- Dextrose 5%: 1034251 rows
