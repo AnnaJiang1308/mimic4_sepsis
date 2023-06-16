@@ -153,7 +153,7 @@ def hourly_sample_action_IV_fluid_bolus(selected_id): # (mL/1 hour)
 
 def hourly_sample_action_vasopressors_equivalent_dose(selected_id): # (mcg/kg/min)
     # Read the CSV file and convert the date columns to datetime objects
-    df = pd.read_csv('./output/data/data_raw/action/vasopressors/vasopressors_norepinephrine_equivalent_dose.csv')
+    df = pd.read_csv('./output/data/data_raw/action/vasopressors/vasopressors_equivalent_dose.csv')
     df['starttime'] = pd.to_datetime(df['starttime'])
     df['endtime'] = pd.to_datetime(df['endtime'])
 
@@ -195,5 +195,5 @@ def hourly_sample_action_vasopressors_equivalent_dose(selected_id): # (mcg/kg/mi
     df_resampled['Discretized_vasopressors'] = pd.cut(df_resampled['norepinephrine_equivalent_dose_rate'], bins=bins, labels=labels)
 
     # Write the discretized DataFrame to a CSV file
-    os.makedirs('./output/data/data_hourly_sample/action/vasopressors_norepinephrine_equivalent_dose', exist_ok=True)
-    df_resampled.to_csv(f'./output/data/data_hourly_sample/action/vasopressors_norepinephrine_equivalent_dose/stay_id_{selected_id}.csv', index=False)
+    os.makedirs('./output/data/data_hourly_sample/action/vasopressors_equivalent_dose', exist_ok=True)
+    df_resampled.to_csv(f'./output/data/data_hourly_sample/action/vasopressors_equivalent_dose/stay_id_{selected_id}.csv', index=False)

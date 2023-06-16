@@ -118,8 +118,8 @@ def data_transfer_action_vasopressors_equivalent_dose(conn):
         df['duration'] = df['duration'] / 60
         df['norepinephrine_equivalent_dose_rate'] = df['norepinephrine_equivalent_dose_rate'].astype(float)
         
-        df.to_csv('./output/data/data_raw/action/vasopressors/vasopressors_norepinephrine_equivalent_dose.csv', index=0)
-        print("output action (vasopressors): vasopressors_norepinephrine_equivalent_dose.csv")
+        df.to_csv('./output/data/data_raw/action/vasopressors/vasopressors_equivalent_dose.csv', index=0)
+        print("output action (vasopressors): vasopressors_equivalent_dose.csv")
 
         cursor.close()
 
