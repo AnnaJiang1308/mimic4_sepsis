@@ -19,6 +19,9 @@
 -- select * from mimiciv_icu.d_items where itemid=220949; -- Dextrose 5%
 -- SELECT count(*) FROM mimiciv_icu.inputevents WHERE itemid=220949; -- Dextrose 5%: 1034251 rows
 
+-- select * from mimiciv_icu.d_items where itemid=225158; -- NaCl 0.9%
+-- SELECT count(*) FROM mimiciv_icu.inputevents WHERE itemid=225158; -- NaCl 0.9%:  1258660 rows
+
 -- 获取所有 Saline
 -- select count(*) from mimiciv_icu.inputevents where itemid in (select itemid from mimiciv_icu.d_items where label like '%Saline%');
 -- SELECT 
