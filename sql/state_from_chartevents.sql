@@ -1,9 +1,9 @@
 SET search_path TO mimiciv_derived, mimiciv_hosp, mimiciv_icu, mimiciv_ed;
 
-drop table IF EXISTS mimiciv_derived.Charteventsneeded;
+drop table IF EXISTS mimiciv_derived.sepsis_charteventsneeded;
 drop table IF EXISTS mimiciv_derived.sepsis_state;
 
-create table  mimiciv_derived.Charteventsneeded as
+create table  mimiciv_derived.sepsis_charteventsneeded as
 	select stay_id, charttime, itemid, valuenum 
 	from chartevents
 	where itemid= 220045 or itemid= 220050 or itemid= 220179 or itemid= 220051  or itemid= 220180 
@@ -13,7 +13,7 @@ create table  mimiciv_derived.Charteventsneeded as
 	
 		;
 	
-insert into  mimiciv_derived.Charteventsneeded
+insert into  mimiciv_derived.sepsis_charteventsneeded
 	select stay_id, charttime, itemid, valuenum 
 	from chartevents
 	where
@@ -25,7 +25,7 @@ insert into  mimiciv_derived.Charteventsneeded
 		
 		;
 	
-insert into  mimiciv_derived.Charteventsneeded
+insert into  mimiciv_derived.sepsis_charteventsneeded
 	select stay_id, charttime, itemid, valuenum 
 	from chartevents
 	where
@@ -38,7 +38,7 @@ insert into  mimiciv_derived.Charteventsneeded
 		
 		;
 	
-insert into  mimiciv_derived.Charteventsneeded
+insert into  mimiciv_derived.sepsis_charteventsneeded
 	select stay_id, charttime, itemid, valuenum 
 	from chartevents
 	where
@@ -53,7 +53,7 @@ insert into  mimiciv_derived.Charteventsneeded
 	
 
 create table  mimiciv_derived.sepsis_state as
-	select * from mimiciv_derived.charteventsneeded
+	select * from mimiciv_derived.sepsis_charteventsneeded
 	where stay_id in (select stay_id from mimiciv_derived.sepsis_patients_cohort);
 	
 	
