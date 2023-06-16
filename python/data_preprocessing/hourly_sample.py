@@ -81,7 +81,7 @@ def hourly_sample_state(selected_id, itemid_list_state, label_state, k = 5):
             df_output[feature] = imputed_values
 
     os.makedirs('./output/data/data_hourly_sample/state', exist_ok=True)
-    df_output.reset_index().to_csv(f'./output/data/data_hourly_sample/state/stay_id{selected_id}.csv',index=0)
+    df_output.reset_index().to_csv(f'./output/data/data_hourly_sample/state/stay_id_{selected_id}.csv',index=0)
 
     # print(i)
     # # Reset the index and save the resampled DataFrame to a new CSV file
@@ -149,11 +149,11 @@ def hourly_sample_action_IV_fluid_bolus(selected_id): # (mL/1 hour)
 
     # Write to a CSV file
     os.makedirs('./output/data/data_hourly_sample/action/IV_fluid_bolus/', exist_ok=True)
-    df_resampled_all.to_csv(f'./output/data/data_hourly_sample/action/IV_fluid_bolus/{selected_id}.csv', index=False)
+    df_resampled_all.to_csv(f'./output/data/data_hourly_sample/action/IV_fluid_bolus/stay_id_{selected_id}.csv', index=False)
 
 def hourly_sample_action_vasopressors_equivalent_dose(selected_id): # (mcg/kg/min)
     # Read the CSV file and convert the date columns to datetime objects
-    df = pd.read_csv('./output/data/data_raw/action/vasopressors_norepinephrine_equivalent_dose.csv')
+    df = pd.read_csv('./output/data/data_raw/action/vasopressors/vasopressors_norepinephrine_equivalent_dose.csv')
     df['starttime'] = pd.to_datetime(df['starttime'])
     df['endtime'] = pd.to_datetime(df['endtime'])
 
@@ -196,4 +196,4 @@ def hourly_sample_action_vasopressors_equivalent_dose(selected_id): # (mcg/kg/mi
 
     # Write the discretized DataFrame to a CSV file
     os.makedirs('./output/data/data_hourly_sample/action/vasopressors_norepinephrine_equivalent_dose', exist_ok=True)
-    df_resampled.to_csv(f'./output/data/data_hourly_sample/action/vasopressors_norepinephrine_equivalent_dose/{selected_id}.csv', index=False)
+    df_resampled.to_csv(f'./output/data/data_hourly_sample/action/vasopressors_norepinephrine_equivalent_dose/stay_id_{selected_id}.csv', index=False)
