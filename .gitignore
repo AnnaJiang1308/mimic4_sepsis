@@ -5,4 +5,4 @@ pyws
 .vscode
 .DS_Store
 
-# sql_file/test.sql
+__pycache__
