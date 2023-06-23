@@ -106,7 +106,32 @@ def data_transfer_action_vasopressors_equivalent_dose(conn):
 
     with conn.cursor() as cursor:
         # SQL command to retrieve norepinephrine_equivalent_dose from mimiciv_derived.norepinephrine_equivalent_dose for stay_ids in mimiciv_derived.sepsis_patients_cohort
-        command = "select stay_id, starttime, endtime, norepinephrine_equivalent_dose from mimiciv_derived.norepinephrine_equivalent_dose where stay_id in (select stay_id from mimiciv_derived.sepsis_patients_cohort);"
+        command = """
+        -- create temporary table containing stay_id, infection_start_time, infection_end_time
+        DROP TABLE IF EXISTS temp_infection_times;
+        CREATE TEMPORARY TABLE temp_infection_times AS
+        SELECT 
+            stay_id, 
+            suspected_infection_time - INTERVAL '24 hours' AS infection_start_time, 
+            suspected_infection_time + INTERVAL '48 hours' AS infection_end_time
+        FROM 
+            mimiciv_derived.sepsis3;
+
+        -- create the sepsis_norepinephrine_equivalent_dose table with rows only within the 24 hours before and 48 hours after infection time
+        SELECT 
+            ne.stay_id,
+            GREATEST(ne.starttime, it.infection_start_time) AS starttime,
+            LEAST(ne.endtime, it.infection_end_time) AS endtime,
+            ne.norepinephrine_equivalent_dose
+        FROM 
+            mimiciv_derived.norepinephrine_equivalent_dose AS ne
+        JOIN 
+            temp_infection_times AS it ON ne.stay_id = it.stay_id
+        WHERE 
+            ne.stay_id IN (SELECT stay_id FROM mimiciv_derived.sepsis_patients_cohort) AND
+            ne.starttime <= it.infection_end_time AND
+            ne.endtime >= it.infection_start_time;
+        """
         cursor.execute(command)
 
         result = cursor.fetchall()

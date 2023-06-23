@@ -37,8 +37,27 @@ insert into  mimiciv_derived.sepsis_charteventsneeded
 		or itemid= 227519 or itemid= 220739 or itemid= 223900 or itemid= 223901
 		;
 
-create table mimiciv_derived.sepsis_state as
-	select * from mimiciv_derived.sepsis_charteventsneeded
-	where stay_id in (select stay_id from mimiciv_derived.sepsis_patients_cohort);
+-- create temporary table containing stay_id, infection_start_time, infection_end_time
+DROP TABLE IF EXISTS temp_infection_times;
+CREATE TEMPORARY TABLE temp_infection_times AS
+SELECT 
+    stay_id, 
+    suspected_infection_time - INTERVAL '24 hours' AS infection_start_time, 
+    suspected_infection_time + INTERVAL '48 hours' AS infection_end_time
+FROM 
+    mimiciv_derived.sepsis3;
+
+-- use the temporary table to select the chartevents needed for the state table
+CREATE TABLE mimiciv_derived.sepsis_state AS
+SELECT 
+    sc.*
+FROM 
+    mimiciv_derived.sepsis_charteventsneeded AS sc
+JOIN 
+    temp_infection_times AS it ON sc.stay_id = it.stay_id
+WHERE 
+    sc.stay_id IN (SELECT stay_id FROM mimiciv_derived.sepsis_patients_cohort)
+    AND sc.charttime BETWEEN it.infection_start_time AND it.infection_end_time;
+
 	
 	
