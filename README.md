@@ -13,7 +13,7 @@ mimic4_spesis
 
 ### Xuyuan Han 
 
- - filter data from up to 24 h preceding until 48 h following the estimated onset of sepsis
+ - ~~filter data from up to 24 h preceding until 48 h following the estimated onset of sepsis~~
  - filter stayid on withdrawal of treatment
  - check *vassopressor was not administered to every stayid*
 

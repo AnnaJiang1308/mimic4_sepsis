@@ -23,17 +23,20 @@ def data_transfer_state(conn, num_stay_ids, threshold = 1000):
             label_state[row[0]] = row[1]
             # Add the itemid to the list
             itemid_list.append(row[0])
+    
+    if os.path.exists('./output/data/data_raw/state'):shutil.rmtree('./output/data/data_raw/state')
+    os.makedirs('./output/data/data_raw/state', exist_ok=True)
 
     # Execute the SQL command
     with conn.cursor() as cursor:
         
         for itemid in itemid_list:
             
-            command_count = "select count(distinct(stay_id)) from mimiciv_derived.sepsis_state where itemid={};".format(itemid)
+            command_count = "select count(distinct(stay_id)) from mimiciv_derived_sepsis.sepsis_state where itemid={};".format(itemid)
             cursor.execute(command_count)
             num = cursor.fetchone()[0]
             
-            command = "select stay_id, charttime, valuenum from mimiciv_derived.sepsis_state where itemid={} order by charttime;".format(itemid)
+            command = "select stay_id, charttime, valuenum from mimiciv_derived_sepsis.sepsis_state where itemid={} order by charttime;".format(itemid)
             cursor.execute(command)   
             result = cursor.fetchall()
             df=pd.DataFrame(result)
@@ -42,7 +45,6 @@ def data_transfer_state(conn, num_stay_ids, threshold = 1000):
                 df.astype({'stay_id': int, 'charttime': 'datetime64[ns]', 'valuenum': float})
             except (Exception, psycopg2.DatabaseError) as error:
                 print("Error executing SQL statement:", error) 
-            os.makedirs('./output/data/data_raw/state', exist_ok=True)
             
             if (num<num_stay_ids/threshold):
                 print("drop:{0:40}".format(label_state[str(itemid)]+".csv")+"\tnumber of stay_id:"+str(num))
@@ -81,8 +83,7 @@ def data_transfer_action_IV_fluid_bolus(conn):
 
         for itemid in a_itemid_list:
             if "Dextrose_5%" in action_label[str(itemid)] or "NaCl_0_9%" in action_label[str(itemid)]:
-                # QUESTION: why do we need to order by starttime?
-                command = "select stay_id, starttime, endtime, amount from mimiciv_derived.sepsis_action where itemid={} order by starttime;".format(itemid)
+                command = "select stay_id, starttime, endtime, amount from mimiciv_derived_sepsis.sepsis_action_inputevents where itemid={} order by starttime;".format(itemid)
                 cursor.execute(command)
 
                 result = cursor.fetchall()
@@ -99,39 +100,14 @@ def data_transfer_action_IV_fluid_bolus(conn):
         cursor.close()
 
 def data_transfer_action_vasopressors_equivalent_dose(conn):
-    # Get the equivalent dose values of the 5 vasopressors from mimiciv_derived.norepinephrine_equivalent_dose: norepinephrine_equivalent_dose
+    # Get the equivalent dose values of the 5 vasopressors from mimiciv_derived_sepsis.sepsis_action_vasopressors_equivalent_dose: norepinephrine_equivalent_dose
 
     if os.path.exists('./output/data/data_raw/action/vasopressors'):shutil.rmtree('./output/data/data_raw/action/vasopressors')
     os.makedirs('./output/data/data_raw/action/vasopressors')
 
     with conn.cursor() as cursor:
-        # SQL command to retrieve norepinephrine_equivalent_dose from mimiciv_derived.norepinephrine_equivalent_dose for stay_ids in mimiciv_derived.sepsis_patients_cohort
-        command = """
-        -- create temporary table containing stay_id, infection_start_time, infection_end_time
-        DROP TABLE IF EXISTS temp_infection_times;
-        CREATE TEMPORARY TABLE temp_infection_times AS
-        SELECT 
-            stay_id, 
-            suspected_infection_time - INTERVAL '24 hours' AS infection_start_time, 
-            suspected_infection_time + INTERVAL '48 hours' AS infection_end_time
-        FROM 
-            mimiciv_derived.sepsis3;
+        command = "select stay_id, starttime, endtime, norepinephrine_equivalent_dose from mimiciv_derived_sepsis.sepsis_action_vasopressors_equivalent_dose order by starttime;"
 
-        -- create the sepsis_norepinephrine_equivalent_dose table with rows only within the 24 hours before and 48 hours after infection time
-        SELECT 
-            ne.stay_id,
-            GREATEST(ne.starttime, it.infection_start_time) AS starttime,
-            LEAST(ne.endtime, it.infection_end_time) AS endtime,
-            ne.norepinephrine_equivalent_dose
-        FROM 
-            mimiciv_derived.norepinephrine_equivalent_dose AS ne
-        JOIN 
-            temp_infection_times AS it ON ne.stay_id = it.stay_id
-        WHERE 
-            ne.stay_id IN (SELECT stay_id FROM mimiciv_derived.sepsis_patients_cohort) AND
-            ne.starttime <= it.infection_end_time AND
-            ne.endtime >= it.infection_start_time;
-        """
         cursor.execute(command)
 
         result = cursor.fetchall()
