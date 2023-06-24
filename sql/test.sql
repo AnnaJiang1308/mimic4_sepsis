@@ -81,3 +81,5 @@
 -- select * from mimiciv_icu.inputevents where stay_id=30000484;
 -- select * from mimiciv_derived.sepsis3 where stay_id=32217866;
 -- select * from mimiciv_derived.sepsis3 where stay_id=31872514;
+
+-- SELECT subject_id, COUNT(*) as count FROM mimiciv_derived.sepsis3 GROUP BY subject_id HAVING COUNT(*) > 1;

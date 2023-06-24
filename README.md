@@ -14,10 +14,10 @@ mimic4_spesis
 ### Xuyuan Han 
 
  - ~~filter data from up to 24 h preceding until 48 h following the estimated onset of sepsis~~
- - filter stayid on withdrawal of treatment
+ - ~~filter stayid on withdrawal of treatment~~
  - check *vassopressor was not administered to every stayid*
 
-# here are the steps up to now
+# What we have done up to now
 
 1. bulid the sql environment with Postgresql, code could be found [here](https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/buildmimic/mysql).
 

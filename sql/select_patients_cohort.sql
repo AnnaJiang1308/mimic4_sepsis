@@ -2,6 +2,17 @@ DROP SCHEMA IF EXISTS mimiciv_derived_sepsis CASCADE;
 CREATE SCHEMA mimiciv_derived_sepsis;
 
 drop table if exists mimiciv_derived_sepsis.sepsis_patients_cohort;
+DROP TABLE IF EXISTS temp_collection_end_times;
+
+-- create temporary table containing stay_id, end of the data collection period
+CREATE TEMPORARY TABLE temp_collection_end_times AS
+SELECT 
+    subject_id, 
+	stay_id,
+    suspected_infection_time + INTERVAL '48 hours' AS collection_end_time,
+    ROW_NUMBER() OVER (PARTITION BY subject_id ORDER BY suspected_infection_time DESC) AS rn
+FROM 
+    mimiciv_derived.sepsis3;
 
 create table mimiciv_derived_sepsis.sepsis_patients_cohort as
 	select * from mimiciv_derived.sepsis3
@@ -25,4 +36,12 @@ create table mimiciv_derived_sepsis.sepsis_patients_cohort as
 	  and stay_id in (select stay_id from 
 	  	  (select stay_id, row_number() over (partition by subject_id order by suspected_infection_time) as rn from mimiciv_derived.sepsis3) as subquery
 		  where rn = 1)
+
+	      -- exclude patients who died within 24 hours of the end of the data collection period
+	  and stay_id not in (
+		  select t.stay_id
+		  from temp_collection_end_times t
+		  join mimiciv_hosp.patients p on p.subject_id = t.subject_id
+		  where t.rn = 1 and p.dod is not null and p.dod between t.collection_end_time and t.collection_end_time + interval '24 hours'
+	  )
 	;
