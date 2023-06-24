@@ -11,6 +11,8 @@ from sklearn.neighbors import KNeighborsRegressor
 
 # Create a custom imputation function
 def lq_distance_imputer(X):
+    # Use the eculedian distance
+    q = 2
     # Calculate the Lq distances
     distances = np.abs(X - X[:, -1].reshape(-1, 1)) ** q
 
