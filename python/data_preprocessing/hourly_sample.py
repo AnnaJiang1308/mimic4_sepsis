@@ -82,6 +82,7 @@ def hourly_sample_state(selected_id, itemid_list_state, label_state, k = 5):
             imputed_values=imputer.fit_transform(df_output[feature].values.reshape(-1,1))
             df_output[feature] = imputed_values
 
+    # Write the DataFrame to a CSV file
     os.makedirs('./output/data/data_hourly_sample/state', exist_ok=True)
     df_output.reset_index().to_csv(f'./output/data/data_hourly_sample/state/stay_id_{selected_id}.csv',index=0)
 
