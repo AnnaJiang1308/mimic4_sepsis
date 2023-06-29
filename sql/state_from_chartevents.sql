@@ -32,7 +32,7 @@ insert into mimiciv_derived_sepsis.sepsis_charteventsneeded
 	from mimiciv_icu.chartevents
 	where
 		   itemid= 225690 or itemid= 225651 or itemid= 220644 or itemid= 220587
-		or itemid= 227519 or itemid= 220739 or itemid= 223900 or itemid= 223901
+		or itemid= 227519 or itemid= 220739 or itemid= 223900 or itemid= 223901 or itemid= 224639
 		;
 
 -- create temporary table containing stay_id, infection_start_time, infection_end_time

@@ -1,77 +1,80 @@
-﻿features,itemid,linksto,description
-age,[patients],,
-weight,[patients],,daily weight
-gender,[patients],,
-,,,
-heart rate,220045,chartevents,
-systolic blood pressure,220050,chartevents,Arterial Blood Pressure systolic
-,220179,chartevents,Non Invasive Blood Pressure systolic
-diastolic blood pressure,220051,chartevents,Arterial Blood Pressure diastolic
-,220180,chartevents,Non Invasive Blood Pressure diastolic
-mean blood pressure,220052,chartevents,Arterial Blood Pressure mean
-,220181,chartevents,Non Invasive Blood Pressure mean
-respiratory rate,220210,chartevents,
-temperature,"223761 ",chartevents,"Temperature Fahrenheit "
-,"223762 ",chartevents,Temperature Celsius
-,,,
-pH,223830,chartevents,PH (Arterial)
-,220274,chartevents,PH (Venous)
-base excess,224828,chartevents,Arterial Base Excess
-,,,
-Hematocrit,220545,chartevents,Hematocrit (serum)
-,226540,chartevents,Hematocrit (whole blood - calc)
-Hemoglobin,220228,chartevents,
-Platelet,227457,chartevents,Platelet Count
-White blood Cell count (WBC),220546,chartevents,WBC
-,,,
-Chloride,220602,chartevents,Chloride (serum)
-,226536,chartevents,Chloride (whole blood)
-Calcium,225667,chartevents,Ionized Calcium
-,225625,chartevents,Calcium non-ionized
-Potassium,227442,chartevents,Potassium (serum)
-,227464,chartevents,Potassium (whole blood)
-Sodium,220645,chartevents,Sodium (serum)
-,226534,chartevents,Sodium (whole blood)
-Lactate,???,,
-,,,
-PT,227465,chartevents,Prothrombin time
-aPTT,227466,chartevents,PTT
-INR,227467,chartevents,
-,,,
-SaO2,220227,chartevents,Arterial O2 Saturation
-SpO2,220277,chartevents,O2 saturation pulseoxymetry
-PaO2,226862,chartevents,PA %O2 Saturation (PA Line)
-PaCO2,220235,chartevents,Arterial CO2 Pressure
-FiO2,223835,chartevents,Inspired O2 Fraction
-PaO2/FiO2 ratio,,,
-,,,
-Urine Nitrogen (BUN),225624,chartevents,BUN
-"Creatinine ",220615,chartevents,Creatinine (serum)
-,229761,chartevents,Creatinine (whole blood)
-Albumin,227456,chartevents,
-Aniongap,227073,chartevents,Anion gap
-Bicarbonate,???,,
-,,,
-Bilirubin,225690,chartevents,Total Bilirubin
-,225651,chartevents,Direct Bilirubin
-ALT,220644,chartevents,
-AST,220587,chartevents,
-,,,
-Urine Output,227519,chartevents,Urine output_ApacheIV
-,,,
-Glasgow Coma Scale (GCS),220739,chartevents,GCS - Eye Opening
-,223900,chartevents,GCS - Verbal Response
-,223901,chartevents,GCS - Motor Response
-,,,
-action space,,,
-IV fluid bolus,220964,inputevents,"""Dextrose 5% / Saline 0,9% no data removed"""
-Saline_0_9%,220954,inputevents, """Saline 0,9% no data removed"""
-NaCl_0_9%,225158,inputevents, """NaCl_0_9%, 1258660 rows"""
-Dextrose_5%,220949,inputevents, """Dextrose_5%, 1034251 rows"""
-Norepinephrine,221906,inputevents,
-Vasopressin,222315,inputevents,
-Dobutamine,221653,inputevents,
-Milrinone,221986,inputevents,
-Phenylephrine,221749,inputevents,
-Dopamine,221662,inputevents,
-Epinephrine,221289,inputevents,
+﻿features,itemid,linksto,description,
+age,[patients],,,
+weight,[patients],,daily weight,
+gender,[patients],,,
+,,,,
+heart rate,220045,chartevents,,
+systolic blood pressure,220050,chartevents,Arterial Blood Pressure systolic,
+,220179,chartevents,Non Invasive Blood Pressure systolic,
+diastolic blood pressure,220051,chartevents,Arterial Blood Pressure diastolic,
+,220180,chartevents,Non Invasive Blood Pressure diastolic,
+mean blood pressure,220052,chartevents,Arterial Blood Pressure mean,
+,220181,chartevents,Non Invasive Blood Pressure mean,
+respiratory rate,220210,chartevents,,
+temperature,"223761 ",chartevents,"Temperature Fahrenheit ",
+,"223762 ",chartevents,Temperature Celsius,
+,,,,
+pH,223830,chartevents,PH (Arterial),
+,220274,chartevents,PH (Venous),
+base excess,224828,chartevents,Arterial Base Excess,
+,,,,
+Hematocrit,220545,chartevents,Hematocrit (serum),
+,226540,chartevents,Hematocrit (whole blood - calc),
+Hemoglobin,220228,chartevents,,
+Platelet,227457,chartevents,Platelet Count,
+White blood Cell count (WBC),220546,chartevents,WBC,
+,,,,
+Chloride,220602,chartevents,Chloride (serum),
+,226536,chartevents,Chloride (whole blood),
+Calcium,225667,chartevents,Ionized Calcium,
+,225625,chartevents,Calcium non-ionized,
+Potassium,227442,chartevents,Potassium (serum),
+,227464,chartevents,Potassium (whole blood),
+Sodium,220645,chartevents,Sodium (serum),
+,226534,chartevents,Sodium (whole blood),
+Lactate,???,,,
+,,,,
+PT,227465,chartevents,Prothrombin time,
+aPTT,227466,chartevents,PTT,
+INR,227467,chartevents,,
+,,,,
+SaO2,220227,chartevents,Arterial O2 Saturation,
+SpO2,220277,chartevents,O2 saturation pulseoxymetry,
+PaO2,226862,chartevents,PA %O2 Saturation (PA Line),
+PaCO2,220235,chartevents,Arterial CO2 Pressure,
+FiO2,223835,chartevents,Inspired O2 Fraction,
+PaO2/FiO2 ratio,,,,
+,,,,
+Urine Nitrogen (BUN),225624,chartevents,BUN,
+"Creatinine ",220615,chartevents,Creatinine (serum),
+,229761,chartevents,Creatinine (whole blood),
+Albumin,227456,chartevents,,
+Aniongap,227073,chartevents,Anion gap,
+Bicarbonate,???,,,
+,,,,
+Bilirubin,225690,chartevents,Total Bilirubin,
+,225651,chartevents,Direct Bilirubin,
+ALT,220644,chartevents,,
+AST,220587,chartevents,,
+,,,,
+Urine Output,227519,chartevents,Urine output_ApacheIV,
+,,,,
+Glasgow Coma Scale (GCS),220739,chartevents,GCS - Eye Opening,
+,223900,chartevents,GCS - Verbal Response,
+,223901,chartevents,GCS - Motor Response,
+,,,,
+weight,224639,chartevents,daily_weight,
+,,,,
+action space,,,,
+IV fluid bolus,220964,inputevents,"""Dextrose 5% / Saline 0,9% no data removed""",
+Saline_0_9%,220954,inputevents," """"""Saline 0","9% no data removed"""""""
+NaCl_0_9%,225158,inputevents," """"""NaCl_0_9%"," 1258660 rows"""""""
+Dextrose_5%,220949,inputevents," """"""Dextrose_5%"," 1034251 rows"""""""
+Norepinephrine,221906,inputevents,,
+Vasopressin,222315,inputevents,,
+Dobutamine,221653,inputevents,,
+Milrinone,221986,inputevents,,
+Phenylephrine,221749,inputevents,,
+Dopamine,221662,inputevents,,
+Epinephrine,221289,inputevents,,
+,,,,
