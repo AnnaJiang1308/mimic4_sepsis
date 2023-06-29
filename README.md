@@ -5,14 +5,13 @@ TODO: Write a project description here
 
 # To-Do List
 
-## As of 2023-06-19
+## As of 2023-06-29
 
 ### Hanxi Jiang 
 
-- Average or sum up the data in the state space per hour.
-- Add another filter in the step *hourly sample* to drop the feature with too many missing values.
-- Add the environment calculating the reward regarding to the end of each patient’s trajectory.
-- Data concerned to patient attributes (weight, gender, age) could be selectly picked in advance, you will find them in `itemid_info/PatientAttribute.csv`.
+- ~~Average or sum up the data in the state space per hour.~~
+- Add the environment calculating the reward regarding the end of each patient’s trajectory.
+- ~~Data concerned with patient attributes (weight, gender, age) could be selectly picked in advance, you will find them in `itemid_info/PatientAttribute.csv`.~~
 
 ### Xuyuan Han 
 
@@ -44,10 +43,10 @@ pip install -r requirements.txt
     - Refer to [select_patients_cohort.sql](/sql/select_patients_cohort.sql) for extraction methods
     - ***Inclusion criteria:***
       - patients meeting sepsis-3 definition
-      - only first ICU visit per each patient
-      - patients over age 18
+      - only the first ICU visit per each patient
+      - patients over the age 18
       - patients initially admitted to the Medical Intensive Care Unit (MICU) for the homogeneity of our patient cohort
-      - data up to 24 hours before and 48 hours after presumed sepsis onset
+      - data up to 24 hours before and 48 hours after the presumed sepsis onset
     - ***Exclusion criteria:***
       - patients who stayed less than 12 hours in icu
       - patients who did not have recorded vital signs for more than 6 hours
@@ -67,7 +66,7 @@ pip install -r requirements.txt
         - Refer to [action_from_vasopressors_equivalent_dose.sql](/sql/action_from_vasopressors_equivalent_dose.sql) for extraction methods
   - Transfer the extracted data into `pandas.DataFrame` and save them as `csv` files
     - Refer to [data_transfer.py](/python/data_preprocessing/data_transfer.py) for details
-- `One-hour resample` the extracted data
+- `One-hour resample` extracted data
   - Refer to [hourly_sample.py](/python/data_preprocessing/hourly_sample.py) for resampling methods
   - Hourly sample `state space` (patient records)
   - Hourly sample `action space` (patient input) and obtain `discrete action space` 
