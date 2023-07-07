@@ -65,11 +65,7 @@ def hourly_sample_state(selected_id, itemid_list_state, label_state, k = 5):
         df_hourly=df_hourly.resample('H').asfreq(fill_value=np.nan).astype(float)
         
         df_hourly[feature]=df_hourly[feature].interpolate(method='linear', axis=0)
-        print(df_hourly[feature])
-        # df_hourly[feature]=df_hourly[feature].ffill()
-        
-   
-        
+        # df_hourly[feature]=df_hourly[feature].ffill()       
         
         df_output['chartdatetime'] = pd.to_datetime(df_output['chartdatetime'])
         #df_output = pd.concat([df_output, df_hourly], join="outer",sort=False)
