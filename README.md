@@ -1,7 +1,9 @@
-mimic4_spesis
+Deep Reinforcement Learning for Optimal Sepsis Treatment Strategies
 ===============
 
-TODO: Write a project description here
+In this project, we use model-free deep reinforcement learning, including behavioral cloning and imitation learning, to analyze the optimal treatment strategies for sepsis in the intensive care unit based on the MIMIC-IV dataset.
+
+Currently, we have finished the data preprocessing part (see `4. data preprocessing` in `Getting Started`) and are working on the reinforcement learning part.
 
 # To-Do List
 
