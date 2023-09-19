@@ -5,7 +5,7 @@ import os
 import psycopg2
 from psycopg2 import sql
 
-def data_transfer_state(conn, num_stay_ids, threshold = 1000):
+def data_transfer_state(conn, num_stay_ids, percent = 1000):
     # generate the list of itemid
     itemid_list_state=[]
     # generate the dictionary of itemid-abbr
@@ -46,13 +46,13 @@ def data_transfer_state(conn, num_stay_ids, threshold = 1000):
             except (Exception, psycopg2.DatabaseError) as error:
                 print("Error executing SQL statement:", error) 
             
-            if (num<num_stay_ids/threshold):
+            if (num<num_stay_ids*percent and label_state[str(itemid)]!="TemperatureC" ):
                 print("drop:{0:40}".format(label_state[str(itemid)]+".csv")+"\tnumber of stay_id:"+str(num))
                 
             else:
                 df.to_csv('./output/data/data_raw/state/{}.csv'.format(label_state[str(itemid)]),index=0)
                 itemid_list_state.append(itemid)
-                print("output:{0:40}".format(label_state[str(itemid)]+".csv")+"\tnumber of stay_id:"+str(num))
+                print("output:{0:40}".format(label_state[str(itemid)]+".csv")+"\tpercent of stay_id:"+str(num/7404))
 
         cursor.close()
     # print(itemid_list_state)
