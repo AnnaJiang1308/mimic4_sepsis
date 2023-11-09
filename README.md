@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 ## 4. Run [01_data_preprocessing.ipynb](/01_data_preprocessing.ipynb) to preprocess the data for Reinforcement Learning
 
-- Extract data from the original mimiciv database
+- Extract data from the derived mimiciv concepts
   - Select `sepsis_patients_cohort` from `mimiciv_derived.sepsis3` 
     - Refer to [select_patients_cohort.sql](/sql/select_patients_cohort.sql) for extraction methods
     - ***Inclusion criteria:***
@@ -53,12 +53,12 @@ pip install -r requirements.txt
       - patients who stayed less than 12 hours in icu
       - patients who did not have recorded vital signs for more than 6 hours
       - patients who died within 24 hours of the end of the data collection period (Withdrawal of treatment, see [Article](https://doi.org/10.1038/s41591-018-0213-5))
-  - Extract `state space data` for each patient 
+  - Extract `state space data` for each patient (patient records)
     - See [itemid_label_state.csv](/itemid_info/itemid_label_state.csv) for details
       - Vital signs: 
         - Sourced from `mimiciv_icu.chartevents` 
         - Refer to [state_from_chartevents.sql](/sql/state_from_chartevents.sql) for extraction methods
-  - Extract `action space data` for each patient 
+  - Extract `action space data` for each patient (patient input)
     - See [itemid_label_action.csv](/itemid_info/itemid_label_action.csv) for details
       - IV_fluid_bolus: 
         - Sourced from `mimiciv_icu.inputevents` 
