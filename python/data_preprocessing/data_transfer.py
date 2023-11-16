@@ -1,11 +1,14 @@
 import shutil
 import csv
 import pandas as pd
+import numpy as np
 import os
 import psycopg2
 from psycopg2 import sql
 
-def data_transfer_state(conn, num_stay_ids, percent = 1000):
+log_fields=['SpO2','BUN','Creatinine_serum','Creatinine_wholeblood','TotalBilirubin','DirectBilirubin','INR']
+
+def data_transfer_state(conn, num_stay_ids, percent):
     # generate the list of itemid
     itemid_list_state=[]
     # generate the dictionary of itemid-abbr
@@ -24,8 +27,8 @@ def data_transfer_state(conn, num_stay_ids, percent = 1000):
             # Add the itemid to the list
             itemid_list.append(row[0])
     
-    if os.path.exists('./output/data/data_raw/state'):shutil.rmtree('./output/data/data_raw/state')
-    os.makedirs('./output/data/data_raw/state', exist_ok=True)
+    if os.path.exists('./output/data/data_raw/state_n'):shutil.rmtree('./output/data/data_raw/state_n')
+    os.makedirs('./output/data/data_raw/state_n', exist_ok=True)
 
     # Execute the SQL command
     with conn.cursor() as cursor:
@@ -50,7 +53,15 @@ def data_transfer_state(conn, num_stay_ids, percent = 1000):
                 print("drop:{0:40}".format(label_state[str(itemid)]+".csv")+"\tnumber of stay_id:"+str(num))
                 
             else:
-                df.to_csv('./output/data/data_raw/state/{}.csv'.format(label_state[str(itemid)]),index=0)
+                # Normalize the valuenum
+                df['valuenum']=df['valuenum'].astype(float)
+                if label_state[str(itemid)] in log_fields:
+                    df['valuenum']=df['valuenum'].apply(lambda x: np.log(x+0.1))
+                    
+                df['valuenum']=(df['valuenum']-df['valuenum'].mean())/(df['valuenum'].std())
+                    
+                    
+                df.to_csv('./output/data/data_raw/state_n/{}.csv'.format(label_state[str(itemid)]),index=0)
                 itemid_list_state.append(itemid)
                 print("output:{0:40}".format(label_state[str(itemid)]+".csv")+"\tpercent of stay_id:"+str(num/7404))
 
