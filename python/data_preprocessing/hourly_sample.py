@@ -25,17 +25,15 @@ def lq_distance_imputer(X):
     # Multiply the weights with the feature values and compute the weighted mean
     return np.sum(weights * X[:, :-1], axis=1)
 
-def hourly_sample_state(selected_id, itemid_list_state, label_state, k = 5):
+def hourly_sample_state(df_state:pd.DataFrame,selected_id, itemid_list_state, label_state, k=5):
     # Set the folder path where the CSV files are stored
-    folder_path = './output/data/data_raw/state/'
+    folder_path = './output/data/data_raw/state_n/'
     columns=['chartdatetime']
 
     # define a new dataframe
     df_output = pd.DataFrame(columns=columns)
 
 
-    #FIXME: flag only for test
-    i=0
 
     # Loop through the file paths and read each file into a DataFrame
     for itemid in itemid_list_state:
@@ -61,7 +59,7 @@ def hourly_sample_state(selected_id, itemid_list_state, label_state, k = 5):
         # # Resample the DataFrame hourly and forward fill missing values
         # df_hourly= df_filtered.resample('H').ffill()
         
-        df_hourly= df_filtered.drop(['stay_id'],axis=1)
+        df_hourly= df_filtered.drop(['stay_id',],axis=1)
         df_hourly=df_hourly.resample('H').asfreq(fill_value=np.nan).astype(float)
         
         df_hourly[feature]=df_hourly[feature].interpolate(method='linear', axis=0)
@@ -87,13 +85,31 @@ def hourly_sample_state(selected_id, itemid_list_state, label_state, k = 5):
             imputed_values=imputer.fit_transform(df_output[feature].values.reshape(-1,1))
             df_output[feature] = imputed_values
 
+      
+    
+    df_output['stay_id'] = selected_id
+    
+
+    
+       
+    
+    # df_output.reset_index().to_csv(f'./output/data/data_hourly_sample/state/stay_id_{selected_id}.csv',index=0)
+
+    # Now df_combined contains the rows of both df and df_output
+    df_state = pd.concat([df_state, df_output])
+
+    
+
+    return df_state
+
     # Write the DataFrame to a CSV file
-    os.makedirs('./output/data/data_hourly_sample/state', exist_ok=True)
-    df_output.reset_index().to_csv(f'./output/data/data_hourly_sample/state/stay_id_{selected_id}.csv',index=0)
+   
 
     # print(i)
     # # Reset the index and save the resampled DataFrame to a new CSV file
     # df_hourly.reset_index().to_csv('./output/your_resampled_file.csv', index=False, header=None)  
+    
+   
 
 def hourly_sample_action_IV_fluid_bolus(selected_id): # (mL/1 hour)
     # Create a list of two fluid types
