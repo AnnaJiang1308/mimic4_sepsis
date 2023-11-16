@@ -5,6 +5,7 @@ import numpy as np
 import os
 import psycopg2
 from psycopg2 import sql
+from sklearn.preprocessing import MinMaxScaler
 
 log_fields=['SpO2','BUN','Creatinine_serum','Creatinine_wholeblood','TotalBilirubin','DirectBilirubin','INR']
 
@@ -29,6 +30,8 @@ def data_transfer_state(conn, num_stay_ids, percent):
     
     if os.path.exists('./output/data/data_raw/state_n'):shutil.rmtree('./output/data/data_raw/state_n')
     os.makedirs('./output/data/data_raw/state_n', exist_ok=True)
+    
+    print("the total number of value is: "+ str(len(itemid_list)))
 
     # Execute the SQL command
     with conn.cursor() as cursor:
@@ -51,7 +54,6 @@ def data_transfer_state(conn, num_stay_ids, percent):
             
             if (num<num_stay_ids*percent and label_state[str(itemid)]!="TemperatureC" ):
                 print("drop:{0:40}".format(label_state[str(itemid)]+".csv")+"\tnumber of stay_id:"+str(num))
-                
             else:
                 # Normalize the valuenum
                 df['valuenum']=df['valuenum'].astype(float)
@@ -59,14 +61,28 @@ def data_transfer_state(conn, num_stay_ids, percent):
                     df['valuenum']=df['valuenum'].apply(lambda x: np.log(x+0.1))
                     
                 df['valuenum']=(df['valuenum']-df['valuenum'].mean())/(df['valuenum'].std())
+                
+                # Assuming df is your DataFrame and 'valuenum' is the column you want to scale
+                column_to_scale = 'valuenum'
+
+                # Extract the column to be scaled
+                values = df[column_to_scale].values.reshape(-1, 1)
+
+                # Create a MinMaxScaler
+                scaler = MinMaxScaler()
+
+                # Fit and transform the data using the scaler
+                scaled_values = scaler.fit_transform(values)
+
+                # Update the DataFrame with the scaled values
+                df[column_to_scale] = scaled_values
                     
-                    
-                df.to_csv('./output/data/data_raw/state_n/{}.csv'.format(label_state[str(itemid)]),index=0)
+                df.to_csv('./output/data/data_raw/state_n/{}.csv'.format(label_state[str(itemid)]),index=False, header=False)
                 itemid_list_state.append(itemid)
                 print("output:{0:40}".format(label_state[str(itemid)]+".csv")+"\tpercent of stay_id:"+str(num/7404))
 
         cursor.close()
-    # print(itemid_list_state)
+    print("the number remain is: "+str(len(itemid_list_state)))
     return itemid_list_state, label_state
 
 
